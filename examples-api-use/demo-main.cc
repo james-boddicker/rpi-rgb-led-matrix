@@ -171,6 +171,19 @@ private:
   }
 };
 
+class FillGreen : public DemoRunner {
+public:
+  FillGreen(Canvas *m) : DemoRunner(m) {}
+  void Run() override {
+    canvas()->Fill(0, 255, 0);
+    // Keep running until interrupted.
+    while (!interrupt_received) {
+      sleep(1);
+    }
+  }
+};
+
+
 // Simple generator that pulses through RGB and White.
 class ColorPulseGenerator : public DemoRunner {
 public:
@@ -1171,7 +1184,8 @@ static int usage(const char *progname) {
           "\t9  - Volume bars (-m <time-step-ms>)\n"
           "\t10 - Evolution of color (-m <time-step-ms>)\n"
           "\t11 - Brightness pulse generator\n"
-          "\t12 - Colorful rotating 3d cube\n");
+          "\t12 - Colorful rotating 3d cube\n"
+          "\t13 - Fill screen with green\n");
   fprintf(stderr, "Example:\n\t%s -D 1 runtext.ppm\n"
           "Scrolls the runtext until Ctrl-C is pressed\n", progname);
   return 1;
@@ -1291,6 +1305,10 @@ int main(int argc, char *argv[]) {
       
     case 12:
       demo_runner = new WireCube(canvas);
+      break;
+
+    case 13:
+      demo_runner = new FillGreen(canvas);
       break;
   }
 
